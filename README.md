@@ -23,14 +23,23 @@ Applied the Augmented Dickey-Fuller (ADF) test on the training data. The raw pri
 ### Step 3: Seasonal Decomposition
 Computed an additive seasonal decomposition over a 252-day business year cycle to visually break down the index into its underlying trend, seasonality, and unstructured noise components.
 
+<img width="1389" height="989" alt="image" src="https://github.com/user-attachments/assets/db74f131-3cac-484f-bd8f-644b6d32699a" />
+
+
 ### Step 4: Parameter Isolation (ACF / PACF)
 By tracking autocorrelation and partial autocorrelation plots of the differenced series, sharp cutoffs are observed after the first lag. This determines the final statistical order baseline: **ARIMA(1, 1, 1)**.
+
+<img width="1590" height="490" alt="image" src="https://github.com/user-attachments/assets/08694370-e401-4349-b97f-6b5fb60e89fd" />
+
 
 ### Step 5: Rolling Walk-Forward ARIMA
 To eliminate the classic "flat line" error of long-term forecasting, a rolling window loop was built. The model forecasts exactly 1 day ahead, updates its history with the true price at market close, and repeats for all 493 test days.
 
 ### Step 6: Residual Extraction & Scaling
 Calculated the out-of-sample linear errors: $\epsilon_t = \text{Actual Price}_t - \text{ARIMA Predicted}_t$. These residuals are normalized into a $[-1, 1]$ window and formatted into 10-day lookback sequences.
+
+<img width="1255" height="547" alt="image" src="https://github.com/user-attachments/assets/e258efd4-4da2-4add-843c-27d13abcfa28" />
+
 
 ### Step 7: Deep Recurrent LSTM Network
 A sequential network architecture consisting of two stacked LSTM layers (64 and 32 units) and two Dense layers is trained specifically to model the underlying patterns inside the ARIMA residuals.
@@ -39,8 +48,14 @@ A sequential network architecture consisting of two stacked LSTM layers (64 and 
 The final output is generated daily by adding the standalone rolling ARIMA forecast and the unscaled LSTM error adjustment prediction:
 $$\text{Final Forecast}_{t+1} = \text{ARIMA Forecast}_{t+1} + \text{LSTM Residual Prediction}_{t+1}$$
 
+<img width="1255" height="548" alt="image" src="https://github.com/user-attachments/assets/70460ce9-a042-441b-8b0f-9a1486c43f06" />
+
+
 ### Step 9: Strategy Backtesting
 Simulated a Long/Short trading strategy over the evaluation window. If the hybrid model predicts tomorrow's price will be higher than today's price, the strategy goes Long ($+1$); otherwise, it takes a Short/Cash position ($-1$).
+
+<img width="1242" height="548" alt="image" src="https://github.com/user-attachments/assets/7c353056-e7f8-41c5-948a-a8e33929f4bd" />
+
 
 ---
 

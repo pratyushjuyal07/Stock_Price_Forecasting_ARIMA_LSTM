@@ -36,7 +36,7 @@ By tracking autocorrelation and partial autocorrelation plots of the differenced
 To eliminate the classic "flat line" error of long-term forecasting, a rolling window loop was built. The model forecasts exactly 1 day ahead, updates its history with the true price at market close, and repeats for all 493 test days.
 
 ### Step 6: Residual Extraction & Scaling
-Calculated the out-of-sample linear errors: $\epsilon_t = \text{Actual Price}_t - \text{ARIMA Predicted}_t$. These residuals are normalized into a $[-1, 1]$ window and formatted into 10-day lookback sequences.
+Calculated the out-of-sample linear errors. These residuals are normalized into a $[-1, 1]$ window and formatted into 10-day lookback sequences.
 
 <img width="1255" height="547" alt="image" src="https://github.com/user-attachments/assets/e258efd4-4da2-4add-843c-27d13abcfa28" />
 
@@ -46,7 +46,6 @@ A sequential network architecture consisting of two stacked LSTM layers (64 and 
 
 ### Step 8: Hybrid Model Synthesis
 The final output is generated daily by adding the standalone rolling ARIMA forecast and the unscaled LSTM error adjustment prediction:
-$$\text{Final Forecast}_{t+1} = \text{ARIMA Forecast}_{t+1} + \text{LSTM Residual Prediction}_{t+1}$$
 
 <img width="1255" height="548" alt="image" src="https://github.com/user-attachments/assets/70460ce9-a042-441b-8b0f-9a1486c43f06" />
 

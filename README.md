@@ -60,9 +60,9 @@ Simulated a Long/Short trading strategy over the evaluation window. If the hybri
 
 ## 3. Empirical Observations & Performance Metrics
 
-- RMSE (Root Mean Squared Error): 201.80
-- MAE  (Mean Absolute Error):     148.18
-- MAPE (Mean Absolute Percentage): 0.61%
+- RMSE(Root Mean Squared Error)     : `201.80`
+- MAE (Mean Absolute Error)         : `148.18`
+- MAPE (Mean Absolute Percent)      :  `0.61%`
 
 * The out-of-sample performance over the 493 trading days generated the following results:
 
